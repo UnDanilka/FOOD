@@ -145,3 +145,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', showModalByScroll);
 });
+
+//Constructor
+
+class Menu{
+    constructor(img, alt, title, desc, price){
+        this.img = img;
+        this.alt = alt;
+        this.title = title;
+        this.desc = desc;
+        this.price = price;
+    }
+    push(){
+        const menuField = document.querySelector('.menu__field');
+        const menu = menuField.querySelector('.container');
+        const newMenu = document.createElement('div');
+        newMenu.classList.add('menu__item');
+        newMenu.innerHTML = `<img src=${this.img} alt=${this.alt}>`;
+        newMenu.innerHTML += `<h3 class="menu__item-subtitle">Меню "${this.title}"</h3>`;
+        newMenu.innerHTML += `<div class="menu__item-descr">${this.desc}</div>`;
+        newMenu.innerHTML += '<div class="menu__item-divider"></div>';
+        newMenu.innerHTML += '<div class="menu__item-price"</div>';
+        const menuItimPrice = newMenu.querySelector('.menu__item-price');
+        menuItimPrice.innerHTML = '<div class="menu__item-cost">Цена:</div>';
+        menuItimPrice.innerHTML += `<div class="menu__item-total"><span>${this.price}</span> грн/день</div>`;
+        menu.append(newMenu);
+    }
+}
+
+
+        
