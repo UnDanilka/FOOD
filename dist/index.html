@@ -18,7 +18,7 @@
             </nav>
         </div>
         <div class="header__right-block">
-            <button class="btn btn_white">Связаться с нами</button>
+            <button data-modal class="btn btn_white">Связаться с нами</button>
         </div>
     </header>
     <div class="sidepanel">
@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div class="offer__action">
-                <button class="btn btn_dark">Связаться с нами</button>
+                <button data-modal class="btn btn_dark">Связаться с нами</button>
             </div>
         </div>
         <div class="container">
@@ -269,7 +269,7 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
         <div class="container">
             <div class="social">
                 <div class="subtitle">Мы в социальных сетях:</div>
@@ -285,13 +285,13 @@
                 <a href="#" class="link">+380500941356</a>
             </div>
         </div>
-    </footer>
+    </footer> -->
 
     <div class="modal">
         <div class="modal__dialog">
             <div class="modal__content">
                 <form action="#">
-                    <div class="modal__close">&times;</div>
+                    <div modal-close class="modal__close">&times;</div>
                     <div class="modal__title">Мы свяжемся с вами как можно быстрее!</div>
                     <input required placeholder="Ваше имя" name="name" type="text" class="modal__input">
                     <input required placeholder="Ваш номер телефона" name="phone" type="phone" class="modal__input">
