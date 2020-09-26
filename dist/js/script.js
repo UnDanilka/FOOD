@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tabs
     const tabs = document.querySelectorAll('.tabheader__item'),
-          tabsContent = document.querySelectorAll('.tabcontent'),
-          tabsParent = document.querySelector('.tabheader__items');
-          
-    function hideTabContent(){
+        tabsContent = document.querySelectorAll('.tabcontent'),
+        tabsParent = document.querySelector('.tabheader__items');
+
+    function hideTabContent() {
         tabsContent.forEach(item => {
             item.classList.add('hide');
             item.classList.remove('show', 'fade');
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function showTabContent(i = 0){
+    function showTabContent(i = 0) {
         tabsContent[i].classList.add('show', 'fade');
         tabsContent[i].classList.remove('hide');
         tabs[i].classList.add('tabheader__item_active');
@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     tabsParent.addEventListener('click', (event) => {
         const target = event.target;
 
-        if (target && target.classList.contains('tabheader__item')){
-            tabs.forEach((item, i)=>{
-                if (target == item){
+        if (target && target.classList.contains('tabheader__item')) {
+            tabs.forEach((item, i) => {
+                if (target == item) {
                     hideTabContent();
                     showTabContent(i);
                 }
@@ -41,44 +41,44 @@ document.addEventListener('DOMContentLoaded', () => {
     //Timer
 
     const deadline = '2020-09-30';
-    function getTimeRemaining(endtime){
+
+    function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
-              days = Math.floor(t / (1000 * 60 * 60 * 24)),
-              hours = Math.floor((t / (1000 * 60 * 60) % 24)),
-              minutes = Math.floor((t / 1000 / 60) % 60),
-              seconds = Math.floor((t/1000) % 60);
-        
+            days = Math.floor(t / (1000 * 60 * 60 * 24)),
+            hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+            minutes = Math.floor((t / 1000 / 60) % 60),
+            seconds = Math.floor((t / 1000) % 60);
+
         return {
             'total': t,
             'days': days,
             'hours': hours,
             'minutes': minutes,
             'seconds': seconds
-        };      
+        };
     }
 
-    function getZero(num){
-        if (num >=0 && num < 10){
+    function getZero(num) {
+        if (num >= 0 && num < 10) {
             return `0${num}`;
-        }
-        else{
+        } else {
             return num;
         }
     }
 
-    
 
-    function setClock(selector, endtime){
+
+    function setClock(selector, endtime) {
         const timer = document.querySelector(selector),
-              days = timer.querySelector('#days'),
-              hours = timer.querySelector('#hours'),
-              minutes = timer.querySelector('#minutes'),
-              seconds = timer.querySelector('#seconds'),
-              timeInterval = setInterval(updateClock, 1000);
-        
+            days = timer.querySelector('#days'),
+            hours = timer.querySelector('#hours'),
+            minutes = timer.querySelector('#minutes'),
+            seconds = timer.querySelector('#seconds'),
+            timeInterval = setInterval(updateClock, 1000);
+
         updateClock();
 
-        function updateClock(){
+        function updateClock() {
             const t = getTimeRemaining(endtime);
 
             days.innerHTML = getZero(t.days);
@@ -86,10 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
             minutes.innerHTML = getZero(t.minutes);
             seconds.innerHTML = getZero(t.seconds);
 
-            if (t.total <= 0){
+            if (t.total <= 0) {
                 clearInterval(timeInterval);
             }
-        }      
+        }
     }
 
     setClock('.timer', deadline);
@@ -97,23 +97,23 @@ document.addEventListener('DOMContentLoaded', () => {
     //Modal
 
     const modalBtns = document.querySelectorAll('[data-modal]'),
-          modalBtnW = modalBtns[0],
-          modalBtnB = modalBtns[1],
-          modalWindow = document.querySelector('.modal'),
-          modalClose = modalWindow.querySelector('[modal-close]');
+        modalBtnW = modalBtns[0],
+        modalBtnB = modalBtns[1],
+        modalWindow = document.querySelector('.modal'),
+        modalClose = modalWindow.querySelector('[modal-close]');
 
 
-    modalBtns.forEach(item =>{
+    modalBtns.forEach(item => {
         item.addEventListener('click', openModal);
     });
 
-    function openModal(){
+    function openModal() {
         modalWindow.style.display = 'block';
         document.body.style.overflow = 'hidden';
         clearInterval(modalTimerId);
     }
 
-    function closeModal(){
+    function closeModal() {
         modalWindow.style.display = 'none';
         document.body.style.overflow = '';
     }
@@ -122,56 +122,116 @@ document.addEventListener('DOMContentLoaded', () => {
     modalClose.addEventListener('click', closeModal);
 
 
-    modalWindow.addEventListener('click', (e)=>{
-        if(e.target === modalWindow){
+    modalWindow.addEventListener('click', (e) => {
+        if (e.target === modalWindow) {
             closeModal();
         }
     });
 
-    document.addEventListener('keydown', (e)=>{
-        if(e.code == 'Escape' && modalWindow.style.display == 'block'){
+    document.addEventListener('keydown', (e) => {
+        if (e.code == 'Escape' && modalWindow.style.display == 'block') {
             closeModal();
         }
     });
 
     const modalTimerId = setTimeout(openModal, 6000);
 
-    function showModalByScroll(){
-        if(window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight){
+    function showModalByScroll() {
+        if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
             window.removeEventListener('scroll', showModalByScroll);
         }
     }
 
     window.addEventListener('scroll', showModalByScroll);
+
+    //Constructor
+
+    class Menu {
+        constructor(img, alt, title, desc, price, ...classes) {
+            this.img = img;
+            this.alt = alt;
+            this.title = title;
+            this.desc = desc;
+            this.price = price;
+            this.classes = classes;
+        }
+        push() {
+            const menuField = document.querySelector('.menu__field');
+            const menu = menuField.querySelector('.container');
+            const newMenu = document.createElement('div');
+
+            if (this.classes.length == 0) {
+                newMenu.classList.add('menu__item');
+            } else {
+                newMenu.classList.add('menu__item');
+                this.classes.forEach(item => newMenu.classList.add(item));
+            }
+
+            newMenu.innerHTML = `<img src=${this.img} alt=${this.alt}>`;
+            newMenu.innerHTML += `<h3 class="menu__item-subtitle">Меню "${this.title}"</h3>`;
+            newMenu.innerHTML += `<div class="menu__item-descr">${this.desc}</div>`;
+            newMenu.innerHTML += '<div class="menu__item-divider"></div>';
+            newMenu.innerHTML += '<div class="menu__item-price"</div>';
+            const menuItimPrice = newMenu.querySelector('.menu__item-price');
+            menuItimPrice.innerHTML = '<div class="menu__item-cost">Цена:</div>';
+            menuItimPrice.innerHTML += `<div class="menu__item-total"><span>${this.price}</span> грн/день</div>`;
+            menu.append(newMenu);
+        }
+    }
+
+    //Forms
+    
+    const forms = document.querySelectorAll('form');
+
+    const message = {
+        loading: 'Загрузка',
+        success: 'Спасибо!',
+        failure: 'Что-то не так...'
+    };
+
+    forms.forEach(item => {
+        postData(item);
+    });
+
+    function postData(form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const statusMessage = document.createElement('div');
+            statusMessage.textContent = message.loading;
+            form.append(statusMessage);
+
+
+            const request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+
+            request.setRequestHeader('Content-type', 'application/json');
+
+            const formData = new FormData(form);
+
+            const object = {};
+            formData.forEach(function (value, key) {
+                object[key] = value;
+            });
+            const json = JSON.stringify(object);
+
+
+            request.send(json);
+
+            request.addEventListener('load', () => {
+                if (request.status === 200) {
+                    console.log(request.response);
+                    statusMessage.textContent = message.success;
+                    form.reset();
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 2000);
+                } else {
+                    statusMessage.textContent = message.failure;
+                }
+            });
+        });
+    }
+
 });
-
-//Constructor
-
-class Menu{
-    constructor(img, alt, title, desc, price){
-        this.img = img;
-        this.alt = alt;
-        this.title = title;
-        this.desc = desc;
-        this.price = price;
-    }
-    push(){
-        const menuField = document.querySelector('.menu__field');
-        const menu = menuField.querySelector('.container');
-        const newMenu = document.createElement('div');
-        newMenu.classList.add('menu__item');
-        newMenu.innerHTML = `<img src=${this.img} alt=${this.alt}>`;
-        newMenu.innerHTML += `<h3 class="menu__item-subtitle">Меню "${this.title}"</h3>`;
-        newMenu.innerHTML += `<div class="menu__item-descr">${this.desc}</div>`;
-        newMenu.innerHTML += '<div class="menu__item-divider"></div>';
-        newMenu.innerHTML += '<div class="menu__item-price"</div>';
-        const menuItimPrice = newMenu.querySelector('.menu__item-price');
-        menuItimPrice.innerHTML = '<div class="menu__item-cost">Цена:</div>';
-        menuItimPrice.innerHTML += `<div class="menu__item-total"><span>${this.price}</span> грн/день</div>`;
-        menu.append(newMenu);
-    }
-}
-
-
-        
